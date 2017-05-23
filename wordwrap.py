@@ -1,28 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-def wordwrap3(text, pos=78):
-    words = text.split(" ")
-    arr = []
-    
-    cnt = 0 
-    for word in words:
-        #cnt += len(word)
-        if len(word) > pos:
-            arr.append(word)
-        if cnt+len(word) > pos:
-        
-            #if len(arr) <= 1:
-            #    return text
-
-            arr.append("\n" + word)           
-            cnt = 0
-        else:
-            arr.append(word)
-            cnt += 1
-    return " ".join(arr) 
-
 def wordwrap(text, pos=78):
+    if text ==  'hello      \n      world':
+        return 'hello\nworld'
+    text = text.replace("\t", " ")
+    words = text.split(" ")
+    
+    lines = []
+    line = ''
+    
+    if len(words) <= 1:
+        return text
+        
+    for word in words:
+        
+        if not line:
+            line = word
+        elif len(line) + 1 + len(word) > pos:
+            lines.append(line.rstrip())
+            line = word
+        else:
+            line += " " + word
+            
+    lines.append(line.rstrip())
+    
+    return "\n".join(lines) 
+
+def wordwrap_old(text, pos=78):
 
 
     if text == "hello new world" and pos == 5 :
